@@ -42,8 +42,7 @@ build () {
   cp -f "$BASE_DIR"/"$CONFIG_FILE" terraform.conf
 
   # Symlink chosen package lists to where live-build will find them
-  rm -rf "config/package-lists"
-  ln -s "package-lists.$PACKAGE_LISTS_SUFFIX" "config/package-lists"
+  #ln -s "package-lists.$PACKAGE_LISTS_SUFFIX" "config/package-lists"
 
   echo -e "
 #------------------#
