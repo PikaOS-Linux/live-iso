@@ -4,49 +4,40 @@ set -e
 
 . ./terraform.conf
 
-if [ "$HWE_KERNEL" = "yes" ]; then
-    KERNEL_FLAVORS="amd64-hwe-${BASEVERSION}"
-else
-    KERNEL_FLAVORS="amd64"
-fi
 
 lb config noauto \
     --architectures "$ARCH" \
     --mode debian \
     --distribution "$BASECODENAME" \
     --parent-distribution "$BASECODENAME" \
-    --linux-packages "linux-image linux-headers" \
-    --linux-flavours "$KERNEL_FLAVORS" \
-    --bootappend-live "boot=live config username=vanilla user-fullname=Vanilla quiet splash bgrt_disable" \
+    --linux-packages "kernel-pika kernel-pika-config" \
+    --bootappend-live "boot=live config username=pikaos user-fullname=PikaOS quiet splash bgrt_disable" \
     \
     --parent-archive-areas "main contrib non-free non-free-firmare" \
     --parent-mirror-bootstrap "$MIRROR_URL" \
-    --parent-mirror-chroot-security "http://deb.debian.org/debian-security" \
-    --parent-mirror-binary-security "http://deb.debian.org/debian-security" \
-    --parent-mirror-binary "https://repo2.vanillaos.org" \
+    --parent-mirror-binary "$MIRROR_URL" \
     \
     --archive-areas "main contrib non-free non-free-firmware" \
     --mirror-bootstrap "$MIRROR_URL" \
-    --mirror-chroot-security "http://deb.debian.org/debian-security" \
-    --mirror-binary-security "http://deb.debian.org/debian-security" \
-    --mirror-binary "https://repo2.vanillaos.org" \
+    --mirror-binary "$MIRROR_URL" \
     \
     --keyring-packages debian-keyring \
-    --apt-options "--yes --option Acquire::Retries=5 --option Acquire::http::Timeout=100" \
+    --apt-options "--yes --option Acquire::Retries=5 --option Acquire::http::Timeout=100 --option Dpkg::Options::=--force-confnew" \
     --apt-recommends true \
     --cache-packages false \
-    --uefi-secure-boot enable \
+    --uefi-secure-boot false \
     --binary-images iso-hybrid \
     --iso-application "$NAME" \
     --iso-volume "$NAME" \
     --firmware-binary false \
     --firmware-chroot false \
-    --security true \
+    --security false \
     --updates false \
-    --debootstrap-options "--exclude=pinephone-tweaks,mobile-tweaks-common,librem5-tweaks,pinetab-tweaks --include=apt-transport-https,ca-certificates,openssl" \
+    --debootstrap-options "--exclude=pinephone-tweaks,mobile-tweaks-common,librem5-tweaks,pinetab-tweaks \
+    --include=apt-transport-https,ca-certificates,openssl,tree" \
     --checksums md5 \
     --clean \
-    --debootstrap-options "--keyring=/usr/share/keyrings/vanilla_keyring.gpg" \
+    --debootstrap-options "--keyring=/usr/share/keyrings/pika-keyring.gpg.key" \
     "${@}"
 
 

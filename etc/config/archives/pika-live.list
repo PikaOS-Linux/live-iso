@@ -1,0 +1,2 @@
+deb http://deb.debian.org/debian main contrib non-free non-free-firmware
+deb https://ppa.pika-os.com/ pikauwu main external rocm amdgpu

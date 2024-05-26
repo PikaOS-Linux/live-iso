@@ -6,3 +6,5 @@ lock-enabled=false
 disable-lock-screen=true
 EOF
 glib-compile-schemas /usr/share/glib-2.0/schemas/
+
+tree /etc/apt

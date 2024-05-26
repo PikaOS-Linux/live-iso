@@ -1,0 +1,5 @@
+# Lower Debians's priority under pika's
+
+Package: *
+Pin: release o=Debian
+Pin-Priority: 400
