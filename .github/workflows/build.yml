@@ -1,4 +1,4 @@
-name: VanillaOS orchid
+name: PikaOS Live Media ISO Build
 
 on:
   workflow_dispatch:
@@ -7,7 +7,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     container:
-      image: ghcr.io/vanilla-os/pico:main
+      image: ubuntu-latest
       volumes:
         - /proc:/proc
         - /:/run/host
